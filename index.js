@@ -2,6 +2,33 @@ const App = () => {
     const goInput = document.querySelector('.goInput');
     const goOutput = document.querySelector('.goOutput');
 
+    const rules = {
+        C: {
+            w: '',
+            h: '',
+        },
+
+        L: {
+            x1: '',
+            y1: '',
+            x2: '',
+            y2: '',
+        },
+
+        R: {
+            x_top: '',
+            y_top: '',
+            x_bottom: '',
+            y_bottom: '',
+        },
+
+        B: {
+            x: '',
+            y: '',
+            color: '',
+        }
+    };
+
     const reqest = (data, parse) => {
         fetch(data)
             .then(res => res.text())
