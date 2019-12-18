@@ -1,16 +1,20 @@
 const App = () => {
-    const go = document.querySelector('.go');
+    const goInput = document.querySelector('.goInput');
+    const goOutput = document.querySelector('.goOutput');
 
-    const reqest = () => {
-        fetch('../input.txt')
+    const reqest = (data, parse) => {
+        fetch(data)
             .then(res => res.text())
             .then(response => {
-                console.log(response);
+                parse(response);
             })
             .catch(err => console.log(err));
     };
 
-    go.addEventListener('click', reqest);
+    const parseOutput = (response) => console.log(response);
+
+    goInput.addEventListener('click', () => reqest('output.txt', parseInput));
+    goOutput.addEventListener('click', () => reqest('output.txt', parseOutput));
 };
 
 document.addEventListener('DOMContentLoaded', App);
