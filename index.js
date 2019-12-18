@@ -13,8 +13,9 @@ const App = () => {
 
     const parseInput = (response) => {
         const splitResponse = response.split('\n');
-        console.log(splitResponse);
-    }
+        const parsedResponse = splitResponse.map(command => command.split(' '))
+        console.log(parsedResponse);
+    };
 
     const parseOutput = (response) => console.log(response);
 
