@@ -29,7 +29,9 @@ const App = () => {
         }
     };
 
-    const reqest = (data, parse) => {
+    const newRules = [];
+
+    const request = (data, parse) => {
         fetch(data)
             .then(res => res.text())
             .then(response => {
@@ -38,16 +40,42 @@ const App = () => {
             .catch(err => console.log(err));
     };
 
+    const createRules = element => {
+        const arr = [...element];
+        const type = arr.shift().toUpperCase();
+        const rule = rules[type];
+
+        const newRule = { ...rule };
+        
+        console.log('--------------------')
+        console.log('Type: ', type);
+        console.log('Rule: ', rule);
+        console.log('Rest: ', arr);
+
+        Object.keys(newRule).forEach((e, index) => {
+            newRule[e] = arr[index];
+        });
+
+        newRules.push({
+            type,
+            command: newRule,
+        });
+    };
+
     const parseInput = (response) => {
         const splitResponse = response.split('\n');
-        const parsedResponse = splitResponse.map(command => command.split(' '))
-        console.log(parsedResponse);
+        const parsedResponse = splitResponse.map(command => command.split(" "));
+        parsedResponse.forEach(element => createRules(element));
+
+        console.log('Split: ', splitResponse);
+        console.log('Parsed: ', parsedResponse);
+        console.log('New Rules: ', newRules);
     };
 
     const parseOutput = (response) => console.log(response);
 
-    goInput.addEventListener('click', () => reqest('input.txt', parseInput));
-    goOutput.addEventListener('click', () => reqest('output.txt', parseOutput));
+    goInput.addEventListener('click', () => request('input.txt', parseInput));
+    goOutput.addEventListener('click', () => request('output.txt', parseOutput));
 };
 
 document.addEventListener('DOMContentLoaded', App);
