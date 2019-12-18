@@ -11,9 +11,14 @@ const App = () => {
             .catch(err => console.log(err));
     };
 
+    const parseInput = (response) => {
+        const splitResponse = response.split('\n');
+        console.log(splitResponse);
+    }
+
     const parseOutput = (response) => console.log(response);
 
-    goInput.addEventListener('click', () => reqest('output.txt', parseInput));
+    goInput.addEventListener('click', () => reqest('input.txt', parseInput));
     goOutput.addEventListener('click', () => reqest('output.txt', parseOutput));
 };
 
