@@ -69,9 +69,16 @@ const App = () => {
     const drawing = () => {
         for (let i = 0; i < newRules.length; i++) {
             if (newRules[i].type === 'C') {
-                ctx_content.innerHTML = '-'.repeat(newRules[i].command.w);
-                ctx_content.innerHTML = '-'.repeat(newRules[i].command.h);
-                // 
+                for (let k = 0; k <= newRules[i].command.h-2; k++) {
+                    const result =
+
+        '-'.repeat(newRules[i].command.w) + '\n' + '|' + ' '.repeat(newRules[i].command.w - 2) + '|' + '\n' + '-'.repeat(newRules[i].command.w);
+        
+                    console.log('qq');
+                    ctx_content.innerHTML += result;
+
+                };
+
                 //     `<div style="width:${newRules[i].command.w}px;height:${newRules[i].command.h}px;"></div>`;
                 console.log('canvas: w', newRules[i].command.w);
                 console.log('canvas: h', newRules[i].command.h);
@@ -110,16 +117,14 @@ const App = () => {
     const s4 = 'xxxxxx';
 
     //const result = s1 + '\n' + s2 + '\n' + s3 + '\n' + s4;
-    const result = `
-    ----------------------
-    |oooooooooooooooxxxxx|
-    |xxxxxxooooooooox   x|
-    |     xoooooooooxxxxx|
-    |     xoooooooooooooo|
-    ----------------------
-    `
-
-    ctx_content.innerHTML = result;
+    // const result = `
+    // ----------------------
+    // |oooooooooooooooxxxxx|
+    // |xxxxxxooooooooox   x|
+    // |     xoooooooooxxxxx|
+    // |     xoooooooooooooo|
+    // ----------------------
+    // `
 
     goInput.addEventListener('click', () => request('input.txt', parseInput));
     goOutput.addEventListener('click', () => request('output.txt', parseOutput));
