@@ -66,39 +66,41 @@ const App = () => {
         });
     };
 
+    const drawCanvas = ({ w, h }) => {
+        const closeLine = '-'.repeat(w) + '\n';
+        let contentLine = '';
+        for (let i = 0; i <= h - 2; i++) {
+            contentLine += '|' + ' '.repeat(w - 2) + '|' + '\n';
+        };
+        ctx_content.innerHTML = closeLine + contentLine + closeLine;
+
+        console.log('canvas: w', w);
+        console.log('canvas: h', h);
+    }
+
     const drawing = () => {
         for (let i = 0; i < newRules.length; i++) {
-            if (newRules[i].type === 'C') {
-                for (let k = 0; k <= newRules[i].command.h-2; k++) {
-                    const result =
+            const { type, command } = newRules[i];
 
-        '-'.repeat(newRules[i].command.w) + '\n' + '|' + ' '.repeat(newRules[i].command.w - 2) + '|' + '\n' + '-'.repeat(newRules[i].command.w);
-        
-                    console.log('qq');
-                    ctx_content.innerHTML += result;
-
-                };
-
-                //     `<div style="width:${newRules[i].command.w}px;height:${newRules[i].command.h}px;"></div>`;
-                console.log('canvas: w', newRules[i].command.w);
-                console.log('canvas: h', newRules[i].command.h);
+            if (type === 'C') {
+                drawCanvas(command);
             }
-            else if (newRules[i].type === 'L') {
-                console.log('line x1', newRules[i].command.x1);
-                console.log('line y1', newRules[i].command.y1);
-                console.log('line x2', newRules[i].command.x2);
-                console.log('line y2', newRules[i].command.y2);
+            else if (type === 'L') {
+                console.log('line x1', command.x1);
+                console.log('line y1', command.y1);
+                console.log('line x2', command.x2);
+                console.log('line y2', command.y2);
             }
-            else if (newRules[i].type === 'R') {
-                console.log('rec x1', newRules[i].command.x_top);
-                console.log('rec y1', newRules[i].command.y_top);
-                console.log('rec x2', newRules[i].command.x_bottom);
-                console.log('rec y2', newRules[i].command.y_bottom);
+            else if (type === 'R') {
+                console.log('rec x1', command.x_top);
+                console.log('rec y1', command.y_top);
+                console.log('rec x2', command.x_bottom);
+                console.log('rec y2', command.y_bottom);
             }
-            else if (newRules[i].type === 'B') {
-                console.log('Bucket x', newRules[i].command.x);
-                console.log('Bucket y', newRules[i].command.y);
-                console.log('Bucket o', newRules[i].command.color);
+            else if (type === 'B') {
+                console.log('Bucket x', command.x);
+                console.log('Bucket y', command.y);
+                console.log('Bucket o', command.color);
             };
         };
     };
