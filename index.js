@@ -1,6 +1,7 @@
 const App = () => {
     const goInput = document.querySelector('.goInput');
     const goOutput = document.querySelector('.goOutput');
+    const draw = document.querySelector('.draw');
 
     const rules = {
         C: {
@@ -46,11 +47,11 @@ const App = () => {
         const rule = rules[type];
 
         const newRule = { ...rule };
-        
-        console.log('--------------------')
-        console.log('Type: ', type);
-        console.log('Rule: ', rule);
-        console.log('Rest: ', arr);
+
+        // console.log('--------------------')
+        // console.log('Type: ', type);
+        // console.log('Rule: ', rule);
+        // console.log('Rest: ', arr);
 
         Object.keys(newRule).forEach((e, index) => {
             newRule[e] = arr[index];
@@ -62,20 +63,34 @@ const App = () => {
         });
     };
 
+    const drawing = () => {
+        for (let i = 0; i < newRules.length; i++) {
+            if (newRules[i].type === 'C') {
+                console.log('canvas');
+            }
+            else if (newRules[i].type === 'L') {
+                console.log('line');
+            }
+            else if (newRules[i].type === 'R') {
+                console.log('rect');
+            }
+            else if (newRules[i].type === 'B') {
+                console.log('backet');
+            };
+        };
+    };
+
     const parseInput = (response) => {
         const splitResponse = response.split('\n');
         const parsedResponse = splitResponse.map(command => command.split(" "));
         parsedResponse.forEach(element => createRules(element));
-
-        console.log('Split: ', splitResponse);
-        console.log('Parsed: ', parsedResponse);
-        console.log('New Rules: ', newRules);
     };
 
     const parseOutput = (response) => console.log(response);
 
     goInput.addEventListener('click', () => request('input.txt', parseInput));
     goOutput.addEventListener('click', () => request('output.txt', parseOutput));
+    draw.addEventListener('click', drawing);
 };
 
 document.addEventListener('DOMContentLoaded', App);
