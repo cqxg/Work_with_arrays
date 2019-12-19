@@ -5,7 +5,6 @@ const App = () => {
     const ctx_content = document.querySelector('.ctx_content');
     const draw = document.querySelector('.draw');
 
-
     const rules = {
         C: {
             w: '',
@@ -51,11 +50,6 @@ const App = () => {
 
         const newRule = { ...rule };
 
-        console.log('--------------------')
-        console.log('Type: ', type);
-        console.log('Rule: ', rule);
-        console.log('Rest: ', arr);
-
         Object.keys(newRule).forEach((e, index) => {
             newRule[e] = arr[index];
         });
@@ -67,23 +61,57 @@ const App = () => {
     };
 
     const drawCanvas = ({ w, h }) => {
-        const closeLine = '-'.repeat(w) + '\n';
-        let contentLine = '';
-        for (let i = 0; i <= h - 2; i++) {
-            contentLine += '|' + ' '.repeat(w - 2) + '|' + '\n';
+        const closeLine = '-'.repeat(w).split('');
+        const contentLine = [];
+        for (let i = 0; i <= h - 1; i++) {
+            const tempLine = ('|' + ' '.repeat(w - 2) + '|').split('');
+            contentLine.push(tempLine);
         };
-        ctx_content.innerHTML = closeLine + contentLine + closeLine;
 
-        console.log('canvas: w', w);
-        console.log('canvas: h', h);
+        const resultLines = [
+            closeLine,
+            ...contentLine,
+            closeLine,
+        ];
+
+        console.log(resultLines);
+
+        return resultLines;
+
+
+        // const closeLine = '-'.repeat(w) + '\n';
+        // let contentLine = '';
+        // for (let i = 0; i <= h - 1; i++) {
+        //     contentLine += '|' + ' '.repeat(w - 2) + '|' + '\n';
+        // };
+
+        // return closeLine + contentLine + closeLine;
+    };
+
+
+    const makeFinalString = (arrOfArr) => {
+        // let total = '';
+        // arrOfArr.forEach(arr => {
+        //     const string = arr.join('');
+        //     total = total + string + '\n';
+        // });
+
+        const total = arrOfArr.reduce((tempString, curr) => {
+            const string = curr.join('');
+            return tempString + string + '\n';
+        }, '');
+
+        return total;
     }
 
     const drawing = () => {
+        let arrOfArr = [];
+
         for (let i = 0; i < newRules.length; i++) {
             const { type, command } = newRules[i];
 
             if (type === 'C') {
-                drawCanvas(command);
+                arrOfArr = drawCanvas(command);
             }
             else if (type === 'L') {
                 console.log('line x1', command.x1);
@@ -103,6 +131,8 @@ const App = () => {
                 console.log('Bucket o', command.color);
             };
         };
+
+        ctx_content.innerText = makeFinalString(arrOfArr);
     };
 
     const parseInput = (response) => {
@@ -112,21 +142,6 @@ const App = () => {
     };
 
     const parseOutput = (response) => console.log(response);
-
-    const s1 = 'xxxxxx';
-    const s2 = 'x    x';
-    const s3 = 'x    x';
-    const s4 = 'xxxxxx';
-
-    //const result = s1 + '\n' + s2 + '\n' + s3 + '\n' + s4;
-    // const result = `
-    // ----------------------
-    // |oooooooooooooooxxxxx|
-    // |xxxxxxooooooooox   x|
-    // |     xoooooooooxxxxx|
-    // |     xoooooooooooooo|
-    // ----------------------
-    // `
 
     goInput.addEventListener('click', () => request('input.txt', parseInput));
     goOutput.addEventListener('click', () => request('output.txt', parseOutput));
