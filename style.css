@@ -1,4 +1,13 @@
-body {
+.button_wrapper {
     display: flex;
     justify-content: center;
+}
+
+.ctx_wrapper {
+    display: flex;
+    justify-self: center;
+    width: 100%;
+    margin-top: 25px;
+    height: calc(100vh - 100px);
+    border: 2px solid black;
 }
