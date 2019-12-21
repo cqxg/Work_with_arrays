@@ -102,20 +102,27 @@ const App = () => {
 
                 if (command.x1 === command.x2) {
                     for (let i = command.y1; i <= command.y2; i++) {
-                        arrOfArr[i].fill('x', command.x1 - 1, command.x1);
+                        arrOfArr[Number(i)].fill('x', command.x1 - 1, command.x1);
                     }
                 }
                 else if (command.x1 !== command.x2) {
-                    arrOfArr[command.y1].fill('x', command.x1 - 1, command.x2);
+                    arrOfArr[Number(command.y1)].fill('x', command.x1 - 1, command.x2);
                 };
             }
 
             else if (type === 'R') {
-                // console.log('rec x1', command.x_top);
-                // console.log('rec y1', command.y_top);
-                // console.log('rec x2', command.x_bottom);
-                // console.log('rec y2', command.y_bottom);
+                arrOfArr[Number(command.y_bottom)].fill('x', command.x_top - 1, command.x_bottom);
+                arrOfArr[Number(command.y_top)].fill('x', command.x_top - 1, command.x_bottom);
+
+                for (let i = command.y_top; i <= command.y_bottom; i++) {
+                    arrOfArr[Number(i)].fill('x', command.x_top - 1, command.x_top);
+                };
+
+                for (let j = command.y_top; j <= command.y_bottom; j++) {
+                    arrOfArr[Number(j)].fill('x', command.x_bottom - 1, command.x_bottom);
+                };
             }
+
             else if (type === 'B') {
                 // console.log('Bucket x', command.x);
                 // console.log('Bucket y', command.y);
