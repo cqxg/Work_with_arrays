@@ -78,32 +78,6 @@ const App = () => {
         return resultLines;
     };
 
-    // const incrementX = ({ x1, x2 }) => {
-    //     const letArr = [];
-    //     for (let i = x1; i <= x2; i++) {
-    //         letArr.push(i);
-    //     };
-
-    //     console.log(letArr);
-    // };
-
-    // const incrementY = ({  y1, y2 }) => {
-    //     const promArr = [];
-    //     for (let j = y1; j <= y2; j++) {
-    //         promArr.push(j);
-    //     };
-    //     console.log(promArr);
-    // };
-
-    // const drawLine = ({ x1, y1, x2, y2 }) => {
-    // if (x1 === x2) {
-    //     incrementY({ y1, y2 });
-    // } else if (y1 === y2) {
-    //     incrementX({ x1, x2 });
-    // };
-    // };
-
-
     const makeFinalString = (arrOfArr) => {
 
         const total = arrOfArr.reduce((tempString, curr) => {
@@ -123,18 +97,19 @@ const App = () => {
             if (type === 'C') {
                 arrOfArr = drawCanvas(command);
             }
+
             else if (type === 'L') {
+
                 if (command.x1 === command.x2) {
-                    for(let i = command.y1; i <= command.y2; i++){
-                        console.log(arrOfArr[i].fill('x', command.x1-1, command.x1));
+                    for (let i = command.y1; i <= command.y2; i++) {
+                        arrOfArr[i].fill('x', command.x1 - 1, command.x1);
                     }
-                    console.log(arrOfArr);
                 }
-                if (command.x1 !== command.x2) {
+                else if (command.x1 !== command.x2) {
                     arrOfArr[command.y1].fill('x', command.x1 - 1, command.x2);
-                    // console.log(arrOfArr);
                 };
             }
+
             else if (type === 'R') {
                 // console.log('rec x1', command.x_top);
                 // console.log('rec y1', command.y_top);
