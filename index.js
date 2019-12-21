@@ -33,6 +33,7 @@ const App = () => {
     };
 
     const newRules = [];
+    const newArrOfArr = [];
 
     const request = (data, parse) => {
         fetch(data)
@@ -74,27 +75,36 @@ const App = () => {
             closeLine,
         ];
 
-        console.log(resultLines);
-
         return resultLines;
-
-
-        // const closeLine = '-'.repeat(w) + '\n';
-        // let contentLine = '';
-        // for (let i = 0; i <= h - 1; i++) {
-        //     contentLine += '|' + ' '.repeat(w - 2) + '|' + '\n';
-        // };
-
-        // return closeLine + contentLine + closeLine;
     };
+
+    // const incrementX = ({ x1, x2 }) => {
+    //     const letArr = [];
+    //     for (let i = x1; i <= x2; i++) {
+    //         letArr.push(i);
+    //     };
+
+    //     console.log(letArr);
+    // };
+
+    // const incrementY = ({  y1, y2 }) => {
+    //     const promArr = [];
+    //     for (let j = y1; j <= y2; j++) {
+    //         promArr.push(j);
+    //     };
+    //     console.log(promArr);
+    // };
+
+    // const drawLine = ({ x1, y1, x2, y2 }) => {
+    // if (x1 === x2) {
+    //     incrementY({ y1, y2 });
+    // } else if (y1 === y2) {
+    //     incrementX({ x1, x2 });
+    // };
+    // };
 
 
     const makeFinalString = (arrOfArr) => {
-        // let total = '';
-        // arrOfArr.forEach(arr => {
-        //     const string = arr.join('');
-        //     total = total + string + '\n';
-        // });
 
         const total = arrOfArr.reduce((tempString, curr) => {
             const string = curr.join('');
@@ -114,25 +124,31 @@ const App = () => {
                 arrOfArr = drawCanvas(command);
             }
             else if (type === 'L') {
-                console.log('line x1', command.x1);
-                console.log('line y1', command.y1);
-                console.log('line x2', command.x2);
-                console.log('line y2', command.y2);
+                if (command.x1 === command.x2) {
+                    for(let i = command.y1; i <= command.y2; i++){
+                        console.log(arrOfArr[i].fill('x', command.x1-1, command.x1));
+                    }
+                    console.log(arrOfArr);
+                }
+                if (command.x1 !== command.x2) {
+                    arrOfArr[command.y1].fill('x', command.x1 - 1, command.x2);
+                    // console.log(arrOfArr);
+                };
             }
             else if (type === 'R') {
-                console.log('rec x1', command.x_top);
-                console.log('rec y1', command.y_top);
-                console.log('rec x2', command.x_bottom);
-                console.log('rec y2', command.y_bottom);
+                // console.log('rec x1', command.x_top);
+                // console.log('rec y1', command.y_top);
+                // console.log('rec x2', command.x_bottom);
+                // console.log('rec y2', command.y_bottom);
             }
             else if (type === 'B') {
-                console.log('Bucket x', command.x);
-                console.log('Bucket y', command.y);
-                console.log('Bucket o', command.color);
+                // console.log('Bucket x', command.x);
+                // console.log('Bucket y', command.y);
+                // console.log('Bucket o', command.color);
             };
         };
 
-        ctx_content.innerText = makeFinalString(arrOfArr);
+        ctx_content.innerText += makeFinalString(arrOfArr);
     };
 
     const parseInput = (response) => {
