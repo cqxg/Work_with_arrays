@@ -1,9 +1,8 @@
 const App = () => {
-    const goInput = document.querySelector('.goInput');
-    const goOutput = document.querySelector('.goOutput');
-    const ctx_wrapper = document.querySelector('.ctx_wrapper');
-    const ctx_content = document.querySelector('.ctx_content');
     const draw = document.querySelector('.draw');
+    const goInput = document.querySelector('.goInput');
+    const ctx_content = document.querySelector('.ctx_content');
+    const input_content = document.querySelector('.input_content');
 
     const rules = {
         C: {
@@ -33,7 +32,6 @@ const App = () => {
     };
 
     const newRules = [];
-    const newArrOfArr = [];
 
     const request = (data, parse) => {
         fetch(data)
@@ -124,8 +122,20 @@ const App = () => {
             }
 
             else if (type === 'B') {
-                // console.log('Bucket x', command.x);
-                // console.log('Bucket y', command.y);
+
+                if (arrOfArr[command.y][Number(command.x)] === ' ') {
+                    // for(let i = 1; i <arrOfArr[1].length; i++ ) {
+                    //     if (arrOfArr[2][i] === ' '){
+                    //         arrOfArr[2][i].replace(/ /g,'o')
+                    //         console.log(arrOfArr[2][5])
+                    //     }
+                    // }
+                    // console.log(arrOfArr);
+                    // var arr2 = ['0', '1', '2', '3', '4', '5', '4', '7', '8', '9', '4', '11'];
+                    // arrOfArr[arrOfArr.map((x, i) => [i, x]).filter(x => x[1] == ' ')] = 'o'
+                    console.log(arrOfArr);
+                    // arrOfArr.replace(/ /g, 'o');
+                }
                 // console.log('Bucket o', command.color);
             };
         };
@@ -137,12 +147,10 @@ const App = () => {
         const splitResponse = response.split('\n');
         const parsedResponse = splitResponse.map(command => command.split(" "));
         parsedResponse.forEach(element => createRules(element));
+        input_content.innerText = response;
     };
 
-    const parseOutput = (response) => console.log(response);
-
     goInput.addEventListener('click', () => request('input.txt', parseInput));
-    goOutput.addEventListener('click', () => request('output.txt', parseOutput));
     draw.addEventListener('click', drawing);
 };
 

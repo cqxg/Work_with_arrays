@@ -1,13 +1,24 @@
-.button_wrapper {
+.content_wrapper {
     display: flex;
-    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: monospace;
 }
 
-.ctx_wrapper {
+.get_wrapper,
+.draw_wrapper {
     display: flex;
-    justify-self: center;
-    width: 100%;
-    margin-top: 25px;
-    height: calc(100vh - 100px);
-    border: 2px solid black;
+    text-align: start;
+    align-items: center;
+    flex-direction: column;
+    width: 50%;
+}
+
+.input_content {
+    margin-top: 15px;
+}
+
+button {
+    width: 50%;
+    margin-top: 20px;
 }
