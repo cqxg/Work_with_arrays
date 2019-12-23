@@ -32,6 +32,7 @@ const App = () => {
     };
 
     const newRules = [];
+    let arrOfArr = [];
 
     const request = (data, parse) => {
         fetch(data)
@@ -59,6 +60,31 @@ const App = () => {
         });
     };
 
+    const drawing = () => {
+        for (let i = 0; i < newRules.length; i++) {
+            const { type, command } = newRules[i];
+            switch (type) {
+                case 'C':
+                    arrOfArr = drawCanvas(command);
+                    break;
+
+                case 'L':
+                    drawLine(command);
+                    break;
+
+                case 'R':
+                    drawRect(command);
+                    break;
+
+                case 'B':
+                    drawBucket(command);
+                    break;
+            };
+        };
+
+        ctx_content.innerText += makeFinalString(arrOfArr);
+    };
+
     const drawCanvas = ({ w, h }) => {
         const closeLine = '-'.repeat(w).split('');
         const contentLine = [];
@@ -76,6 +102,36 @@ const App = () => {
         return resultLines;
     };
 
+    const drawLine = ({ x1, y1, x2, y2 }) => {
+        if (x1 === x2) {
+            for (let i = y1; i <= y2; i++) {
+                arrOfArr[Number(i)].fill('x', x1 - 1, x1);
+            }
+        }
+        else if (x1 !== x2) {
+            arrOfArr[Number(y1)].fill('x', x1 - 1, x2);
+        };
+    };
+
+    const drawRect = ({ x_top, y_top, x_bottom, y_bottom }) => {
+        arrOfArr[Number(y_bottom)].fill('x', x_top - 1, x_bottom);
+        arrOfArr[Number(y_top)].fill('x', x_top - 1, x_bottom);
+
+        for (let i = y_top; i <= y_bottom; i++) {
+            arrOfArr[Number(i)].fill('x', x_top - 1, x_top);
+        };
+
+        for (let j = y_top; j <= y_bottom; j++) {
+            arrOfArr[Number(j)].fill('x', x_bottom - 1, x_bottom);
+        };
+    };
+
+    const drawBucket = ({ x, y, color }) => {
+        if (arrOfArr[y][Number(x)] === ' ') {
+            console.log('Bucket');
+        };
+    };
+
     const makeFinalString = (arrOfArr) => {
 
         const total = arrOfArr.reduce((tempString, curr) => {
@@ -84,63 +140,6 @@ const App = () => {
         }, '');
 
         return total;
-    }
-
-    const drawing = () => {
-        let arrOfArr = [];
-
-        for (let i = 0; i < newRules.length; i++) {
-            const { type, command } = newRules[i];
-
-            if (type === 'C') {
-                arrOfArr = drawCanvas(command);
-            }
-
-            else if (type === 'L') {
-
-                if (command.x1 === command.x2) {
-                    for (let i = command.y1; i <= command.y2; i++) {
-                        arrOfArr[Number(i)].fill('x', command.x1 - 1, command.x1);
-                    }
-                }
-                else if (command.x1 !== command.x2) {
-                    arrOfArr[Number(command.y1)].fill('x', command.x1 - 1, command.x2);
-                };
-            }
-
-            else if (type === 'R') {
-                arrOfArr[Number(command.y_bottom)].fill('x', command.x_top - 1, command.x_bottom);
-                arrOfArr[Number(command.y_top)].fill('x', command.x_top - 1, command.x_bottom);
-
-                for (let i = command.y_top; i <= command.y_bottom; i++) {
-                    arrOfArr[Number(i)].fill('x', command.x_top - 1, command.x_top);
-                };
-
-                for (let j = command.y_top; j <= command.y_bottom; j++) {
-                    arrOfArr[Number(j)].fill('x', command.x_bottom - 1, command.x_bottom);
-                };
-            }
-
-            else if (type === 'B') {
-
-                if (arrOfArr[command.y][Number(command.x)] === ' ') {
-                    // for(let i = 1; i <arrOfArr[1].length; i++ ) {
-                    //     if (arrOfArr[2][i] === ' '){
-                    //         arrOfArr[2][i].replace(/ /g,'o')
-                    //         console.log(arrOfArr[2][5])
-                    //     }
-                    // }
-                    // console.log(arrOfArr);
-                    // var arr2 = ['0', '1', '2', '3', '4', '5', '4', '7', '8', '9', '4', '11'];
-                    // arrOfArr[arrOfArr.map((x, i) => [i, x]).filter(x => x[1] == ' ')] = 'o'
-                    console.log(arrOfArr);
-                    // arrOfArr.replace(/ /g, 'o');
-                }
-                // console.log('Bucket o', command.color);
-            };
-        };
-
-        ctx_content.innerText += makeFinalString(arrOfArr);
     };
 
     const parseInput = (response) => {
