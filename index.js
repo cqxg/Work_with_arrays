@@ -127,9 +127,15 @@ const App = () => {
     };
 
     const drawBucket = ({ x, y, color }) => {
-        if (arrOfArr[y][Number(x)] === ' ') {
-            console.log('Bucket');
-        };
+        // if (arrOfArr[y][Number(x)] === ' ') {
+        //     arrOfArr.forEach(row => {
+        //         row.forEach((item, index) => {
+        //             if (item === ' ') {
+        //                 row[index] = 'o';
+        //             };
+        //         });
+        //     });
+        // };
     };
 
     const makeFinalString = (arrOfArr) => {
