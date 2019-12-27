@@ -3,6 +3,7 @@ const App = () => {
     const goInput = document.querySelector('.goInput');
     const ctx_content = document.querySelector('.ctx_content');
     const input_content = document.querySelector('.input_content');
+    const ignore = new Set();
 
     const rules = {
         C: {
@@ -77,7 +78,7 @@ const App = () => {
                     break;
 
                 case 'B':
-                    drawBucket(command);
+                    fill(command);
                     break;
             };
         };
@@ -126,20 +127,37 @@ const App = () => {
         };
     };
 
-    const drawBucket = ({ x, y, color }) => {
-        // if (arrOfArr[y][Number(x)] === ' ') {
-        //     arrOfArr.forEach(row => {
-        //         row.forEach((item, index) => {
-        //             if (item === ' ') {
-        //                 row[index] = 'o';
-        //             };
-        //         });
-        //     });
-        // };
+    const inRange = (y, x) => {
+        if (y < 0 || y > arrOfArr.length) {
+            return false;
+        } else if (x < 0 || x > arrOfArr[0].length) {
+            return false;
+        } else {
+            return true;
+        }
     };
 
-    const makeFinalString = (arrOfArr) => {
+    const border = (y, x) => [
+        [x - 1, y - 1],
+        [x, y],
+        [x - 1, y + 1],
+        [x, y + 1],
+        [x, y - 1],
+        [x + 1, y],
+        [x + 1, y + 1],
+        [x + 1, y - 1]
+    ].filter(([y, x]) => inRange(y, x));
 
+    const fill = ({ y, x }) => {
+        if (arrOfArr[y][x] === ' ') {
+            arrOfArr[y][x] = 'o';
+            border(y, x).forEach(([x, y]) => fill(x, y));
+        };
+    };
+
+
+
+    const makeFinalString = (arrOfArr) => {
         const total = arrOfArr.reduce((tempString, curr) => {
             const string = curr.join('');
             return tempString + string + '\n';
