@@ -3,7 +3,6 @@ const App = () => {
     const goInput = document.querySelector('.goInput');
     const ctx_content = document.querySelector('.ctx_content');
     const input_content = document.querySelector('.input_content');
-    const ignore = new Set();
 
     const rules = {
         C: {
@@ -35,6 +34,8 @@ const App = () => {
     const newRules = [];
     let arrOfArr = [];
 
+
+    // ---------------------------------------- UTILS--------------------------------------------------------------
     const request = (data, parse) => {
         fetch(data)
             .then(res => res.text())
@@ -44,6 +45,42 @@ const App = () => {
             .catch(err => console.log(err));
     };
 
+    const makeNums = (y, x) => ({
+        num_x: Number(x),
+        num_y: Number(y),
+    });
+
+    const inRange = (y, x) => {
+        const { num_x, num_y } = makeNums(y, x);
+
+        if (num_y < 0 || num_y > arrOfArr.length) {
+            return false;
+        } else if (num_x < 0 || num_x > arrOfArr[0].length) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+
+    const border = (y, x) => {
+        const { num_x, num_y } = makeNums(y, x);
+        const rangedArray = [
+            [num_x - 1, num_y - 1],
+            [num_x, num_y],
+            [num_x - 1, num_y + 1],
+            [num_x, num_y + 1],
+            [num_x, num_y - 1],
+            [num_x + 1, num_y],
+            [num_x + 1, num_y + 1],
+            [num_x + 1, num_y - 1]
+        ];
+
+        return rangedArray.filter(([y, x]) => inRange(y, x, console.log('координаты вокруг указанной:',y,x), console.log('......................')));
+    };
+    // ------------------------------------------------------------------------------------------------------------
+
+
+    // ---------------------------------------- GENERAL -----------------------------------------------------------
     const createRules = element => {
         const arr = [...element];
         const type = arr.shift().toUpperCase();
@@ -61,6 +98,26 @@ const App = () => {
         });
     };
 
+    const makeFinalString = (arrOfArr) => {
+        const total = arrOfArr.reduce((tempString, curr) => {
+            const string = curr.join('');
+            return tempString + string + '\n';
+        }, '');
+
+        return total;
+    };
+
+    const parseInput = (response) => {
+        const splitResponse = response.split('\n');
+        const parsedResponse = splitResponse.map(command => command.split(" "));
+        
+        parsedResponse.forEach(element => createRules(element));
+        input_content.innerText = response;
+    };
+    // ------------------------------------------------------------------------------------------------------------
+
+
+    // ---------------------------------------- DRAWING -----------------------------------------------------------
     const drawing = () => {
         for (let i = 0; i < newRules.length; i++) {
             const { type, command } = newRules[i];
@@ -78,7 +135,7 @@ const App = () => {
                     break;
 
                 case 'B':
-                    fill(command);
+                    fillColour(command);
                     break;
             };
         };
@@ -127,51 +184,23 @@ const App = () => {
         };
     };
 
-    const inRange = (y, x) => {
-        if (y < 0 || y > arrOfArr.length) {
-            return false;
-        } else if (x < 0 || x > arrOfArr[0].length) {
-            return false;
-        } else {
-            return true;
-        }
-    };
+    const fillColour = ({ y, x }) => {
+        const { num_x, num_y } = makeNums(y, x);
 
-    const border = (y, x) => [
-        [x - 1, y - 1],
-        [x, y],
-        [x - 1, y + 1],
-        [x, y + 1],
-        [x, y - 1],
-        [x + 1, y],
-        [x + 1, y + 1],
-        [x + 1, y - 1]
-    ].filter(([y, x]) => inRange(y, x));
+        if (arrOfArr[num_y][num_x] == ' ') {
+            arrOfArr[num_y][num_x] = 'o';
 
-    const fill = ({ y, x }) => {
-        if (arrOfArr[y][x] === ' ') {
-            arrOfArr[y][x] = 'o';
-            border(y, x).forEach(([x, y]) => fill(x, y));
+            const result = border(num_y, num_x);
+
+            console.log(`Тут должен был быть заполненый массив вокруг координат ${y}, ${x}`, result);
+            console.log('................................');
+            console.log('Сам массив arrOfArr:', arrOfArr);
+
+            result.forEach(([y, x]) => fillColour(y, x));
         };
     };
+    // --------------------------------------------------------------------------------------------------
 
-
-
-    const makeFinalString = (arrOfArr) => {
-        const total = arrOfArr.reduce((tempString, curr) => {
-            const string = curr.join('');
-            return tempString + string + '\n';
-        }, '');
-
-        return total;
-    };
-
-    const parseInput = (response) => {
-        const splitResponse = response.split('\n');
-        const parsedResponse = splitResponse.map(command => command.split(" "));
-        parsedResponse.forEach(element => createRules(element));
-        input_content.innerText = response;
-    };
 
     goInput.addEventListener('click', () => request('input.txt', parseInput));
     draw.addEventListener('click', drawing);
