@@ -70,6 +70,7 @@ const App = () => {
     const border = ({ x, y }) => {
         const rangedArray = [
             [x - 1, y - 1],
+            [x - 1, y],
             [x, y],
             [x - 1, y + 1],
             [x, y + 1],
@@ -79,24 +80,7 @@ const App = () => {
             [x + 1, y - 1]
         ];
 
-        // const rangedArray = [
-        //     [num_y - 1, num_x - 1],
-        //     [num_y, num_x],
-        //     [num_y + 1, num_x - 1],
-        //     [num_y + 1, num_x],
-        //     [num_y - 1, num_x],
-        //     [num_y, num_x + 1],
-        //     [num_y + 1, num_x + 1],
-        //     [num_y - 1, num_x + 1]
-        // ];
-
-        console.log('Координаты внутри border:', x, y);
-        console.log('......................');
-        console.log('RangedArray: ', rangedArray);
-
         const filteredArray = rangedArray.filter(([x, y]) => inRange({ x, y }));
-
-        console.log('FilteredArray: ', filteredArray);
 
         return filteredArray;
     };
@@ -219,18 +203,10 @@ const App = () => {
 
         const { num_x, num_y } = makeNums({ x, y });
 
-        console.log(arrOfArr[1][1])
-
-        console.log(`Координаты ${x}:${num_x}, ${y}:${num_y}`);
-
         if (arrOfArr[num_y][num_x] == EMPTY_SPACE) {
             arrOfArr[num_y][num_x] = 'o';
 
             const result = border({ x: num_x, y: num_y });
-
-            console.log(`Тут должен был быть заполненый массив вокруг координат ${x}, ${y}`, result);
-            console.log('................................');
-            console.log('Сам массив arrOfArr:', arrOfArr);
 
             result.forEach(([x, y]) => fillColour({ x, y, color }));
         };
