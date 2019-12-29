@@ -1,10 +1,10 @@
 const App = () => {
     const draw = document.querySelector('.draw');
     const goInput = document.querySelector('.goInput');
-    const ctx_content = document.querySelector('.ctx_content');
-    const input_content = document.querySelector('.input_content');
+    const ctxContent = document.querySelector('.ctx_content');
+    const inputContent = document.querySelector('.input_content');
 
-    const rules = {
+    const RULES = {
         C: {
             w: '',
             h: '',
@@ -31,9 +31,6 @@ const App = () => {
         }
     };
 
-    const newRules = [];
-    let arrOfArr = [];
-
     const TOOLBOX = {
         EMPTY_SPACE: ' ',
         HOR_LINE: '-',
@@ -41,6 +38,8 @@ const App = () => {
         FILL_LINE: 'x',
     }
 
+    const newRules = [];
+    const arrOfArr = [];
 
     // ---------------------------------------- UTILS--------------------------------------------------------------
     const request = (data, parse) => {
@@ -91,7 +90,7 @@ const App = () => {
     const createRules = element => {
         const arr = [...element];
         const type = arr.shift().toUpperCase();
-        const rule = rules[type];
+        const rule = RULES[type];
 
         const newRule = { ...rule };
 
@@ -105,8 +104,8 @@ const App = () => {
         });
     };
 
-    const makeFinalString = (arrOfArr) => {
-        const total = arrOfArr.reduce((tempString, curr) => {
+    const makeFinalString = (arr) => {
+        const total = arr.reduce((tempString, curr) => {
             const string = curr.join('');
             return tempString + string + '\n';
         }, '');
@@ -119,7 +118,7 @@ const App = () => {
         const parsedResponse = splitResponse.map(command => command.split(" "));
 
         parsedResponse.forEach(element => createRules(element));
-        input_content.innerText = response;
+        inputContent.innerText = response;
     };
     // ------------------------------------------------------------------------------------------------------------
 
@@ -130,7 +129,7 @@ const App = () => {
             const { type, command } = newRules[i];
             switch (type) {
                 case 'C':
-                    arrOfArr = drawCanvas(command);
+                    arrOfArr.push(...drawCanvas(command));
                     break;
 
                 case 'L':
@@ -147,7 +146,7 @@ const App = () => {
             };
         };
 
-        ctx_content.innerText += makeFinalString(arrOfArr);
+        ctxContent.innerText += makeFinalString(arrOfArr);
     };
 
     const drawCanvas = ({ w, h }) => {
@@ -174,27 +173,27 @@ const App = () => {
 
         if (x1 === x2) {
             for (let i = y1; i <= y2; i++) {
-                arrOfArr[Number(i)].fill(FILL_LINE, x1 - 1, x1);
+                arrOfArr[i].fill(FILL_LINE, x1 - 1, x1);
             }
         }
         else if (x1 !== x2) {
-            arrOfArr[Number(y1)].fill(FILL_LINE, x1 - 1, x2);
+            arrOfArr[y1].fill(FILL_LINE, x1 - 1, x2);
         };
     };
 
     const drawRect = ({ x_top, y_top, x_bottom, y_bottom }) => {
         const { FILL_LINE } = TOOLBOX;
 
-        arrOfArr[Number(y_bottom)].fill(FILL_LINE, x_top - 1, x_bottom);
+        arrOfArr[y_bottom].fill(FILL_LINE, x_top - 1, x_bottom);
 
-        arrOfArr[Number(y_top)].fill(FILL_LINE, x_top - 1, x_bottom);
+        arrOfArr[y_top].fill(FILL_LINE, x_top - 1, x_bottom);
 
         for (let i = y_top; i <= y_bottom; i++) {
-            arrOfArr[Number(i)].fill(FILL_LINE, x_top - 1, x_top);
+            arrOfArr[i].fill(FILL_LINE, x_top - 1, x_top);
         };
 
         for (let j = y_top; j <= y_bottom; j++) {
-            arrOfArr[Number(j)].fill(FILL_LINE, x_bottom - 1, x_bottom);
+            arrOfArr[j].fill(FILL_LINE, x_bottom - 1, x_bottom);
         };
     };
 
@@ -215,7 +214,7 @@ const App = () => {
 
 
     goInput.addEventListener('click', () => request('input.txt', parseInput));
-    draw.addEventListener('click', drawing);
+    draw.addEventListener('click', drawing, { once: true });
 };
 
 document.addEventListener('DOMContentLoaded', App);
