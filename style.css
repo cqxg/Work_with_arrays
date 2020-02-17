@@ -3,6 +3,15 @@
     font-size: 14px;
     font-weight: bold;
     font-family: monospace;
+    margin: 5px;
+}
+
+.inputs_wrapper {
+    display: flex;
+}
+
+.c, .l, .r, .b {
+    width: 25%;
 }
 
 .get_wrapper,
