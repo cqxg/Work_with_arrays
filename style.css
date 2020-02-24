@@ -1,17 +1,32 @@
 .fields_wrapper {
+    margin-top: 30px;
     display: flex;
     font-size: 14px;
     font-weight: bold;
     font-family: monospace;
-    margin: 5px;
 }
 
 .inputs_wrapper {
     display: flex;
 }
 
+input {
+    max-width: 25px;
+    margin: 3px;
+}
+
 .c, .l, .r, .b {
     width: 25%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.c_desc,
+.l_desc,
+.r_desc,
+.b_desc {
+    text-align: center;
 }
 
 .get_wrapper,
