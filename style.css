@@ -1,32 +1,5 @@
-.fields_wrapper {
-    margin-top: 30px;
+.content_wrapper {
     display: flex;
-    font-size: 14px;
-    font-weight: bold;
-    font-family: monospace;
-}
-
-.inputs_wrapper {
-    display: flex;
-}
-
-input {
-    max-width: 25px;
-    margin: 3px;
-}
-
-.c, .l, .r, .b {
-    width: 25%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-.c_desc,
-.l_desc,
-.r_desc,
-.b_desc {
-    text-align: center;
 }
 
 .get_wrapper,
@@ -38,11 +11,8 @@ input {
     width: 50%;
 }
 
-.input_content {
-    margin-top: 15px;
-}
-
 button {
     width: 50%;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
