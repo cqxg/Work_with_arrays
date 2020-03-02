@@ -1,3 +1,21 @@
+.desc, 
+.desc_text, 
+.desc_sub {
+    display: flex;
+    text-align: start;
+    flex-direction: column;
+}
+
+.desc {
+    max-width: 70%;
+    margin: 0 auto;
+}
+
+.desc_sub {
+    margin: 20px;
+    align-self: center;
+}
+
 .content_wrapper {
     display: flex;
 }
