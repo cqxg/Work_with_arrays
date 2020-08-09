@@ -7,7 +7,7 @@ https://cqxg.github.io/Work_with_arrays/
 C - размер поля для рисования
 L - нарисовать линию
 R - создать прямоугольник
-Б - аналог инструмента «Ведро»
+B - аналог инструмента «Заливка»
   
 This is a small, but rather entertaining application, was once created as a test task.
 Its purpose is to show the ability to work with arrays, and not impress the appearance of the interface.
