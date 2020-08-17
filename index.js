@@ -41,7 +41,6 @@ const App = () => {
     const newRules = [];
     const arrOfArr = [];
 
-    // ---------------------------------------- UTILS--------------------------------------------------------------
     const request = (data, parse) => {
         fetch(data)
             .then(res => res.text())
@@ -83,10 +82,7 @@ const App = () => {
 
         return filteredArray;
     };
-    // ------------------------------------------------------------------------------------------------------------
 
-
-    // ---------------------------------------- GENERAL -----------------------------------------------------------
     const createRules = element => {
         const arr = [...element];
         const type = arr.shift().toUpperCase();
@@ -120,10 +116,7 @@ const App = () => {
         parsedResponse.forEach(element => createRules(element));
         inputContent.innerText = response;
     };
-    // ------------------------------------------------------------------------------------------------------------
 
-
-    // ---------------------------------------- DRAWING -----------------------------------------------------------
     const drawing = () => {
         for (let i = 0; i < newRules.length; i++) {
             const { type, command } = newRules[i];
@@ -210,8 +203,6 @@ const App = () => {
             result.forEach(([x, y]) => fillColour({ x, y, color }));
         };
     };
-    // --------------------------------------------------------------------------------------------------
-
 
     goInput.addEventListener('click', () => request('input.txt', parseInput));
     draw.addEventListener('click', drawing, { once: true });
