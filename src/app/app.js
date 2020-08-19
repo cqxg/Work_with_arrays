@@ -177,7 +177,7 @@ const App = () => {
     const drawRect = ({ x_top, y_top, x_bottom, y_bottom }) => {
         const { FILL_LINE } = TOOLBOX;
 
-        arrOfArr[y_bottom].fill(FILL_LINE, x_top - 1, x_bottom);
+        arrOfArr[Number(y_bottom)].fill(FILL_LINE, x_top - 1, x_bottom);
 
         arrOfArr[y_top].fill(FILL_LINE, x_top - 1, x_bottom);
 
