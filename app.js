@@ -204,7 +204,7 @@ const App = () => {
         };
     };
 
-    goInput.addEventListener('click', () => request('../input.txt', parseInput));
+    goInput.addEventListener('click', () => request('input.txt', parseInput));
     draw.addEventListener('click', drawing, { once: true });
 };
 
